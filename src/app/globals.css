@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 191 97% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 191 97% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 191 97% 15%;
+
+    --primary: 175 70% 41%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 191 97% 15%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 191 97% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 175 70% 41%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 191 97% 15%;
+    --foreground: 0 0% 98%;
+
+    --card: 191 97% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 191 97% 15%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 191 97% 15%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 175 70% 41%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom styles for CulinAIry */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-culinairy-teal to-culinairy-cyan;
+}
+
+/* Enhanced text contrast */
+.text-enhanced {
+  @apply text-culinairy-lightGray;
+}
+
+/* Accordion custom styles */
+.accordion-custom .accordion-item {
+  @apply border border-gray-800 rounded-lg bg-gray-900 overflow-hidden;
+}
+
+.accordion-custom .accordion-trigger {
+  @apply text-lg font-medium text-left text-white py-4 px-6 hover:no-underline;
+}
+
+.accordion-custom .accordion-content {
+  @apply text-culinairy-lightGray px-6 pb-4;
+}

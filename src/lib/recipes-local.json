@@ -1,0 +1,144 @@
+{
+  "recipes": [
+    {
+      "id": "chiken-chow-mein-style-noodles",
+      "title": "Chicken Chow Mein-Style Noodles",
+      "description": "with Stir-fried Veggies and Peanuts",
+      "image": "/images/dishes/Chicken_Chow_Mein_Style_Noodlesw.png",
+      "cookTime": "35 min",
+      "prepTime": "8 min",
+      "calories": 820,
+      "tags": ["Family Friendly", "Protein Plus"],
+      "detailedDescription": "",
+      "ingredients": [],
+      "steps": []
+    },
+    {
+      "id": "lemony-beef-and-orzo-bowls",
+      "title": "Lemony Beef and Orzo Bowls",
+      "description": "with Feta and Sweet Peppers",
+      "image": "/images/dishes/Lemony_Beef_and_Orzo_Bowlswith_F.png",
+      "cookTime": "25 min",
+      "prepTime": "8 min",
+      "calories": 800,
+      "tags": ["Family Friendly", "Quick"],
+      "detailedDescription": "A delightful Mediterranean-inspired dish that combines perfectly seasoned ground beef with tender orzo pasta. The bright citrus notes from fresh lemon complement the savory meat, while sweet bell peppers add color and crunch. Finished with crumbled feta cheese for a creamy, tangy touch, this bowl is both satisfying and refreshing.",
+      "ingredients": [
+        {
+          "name": "Ground Beef",
+          "image": "/images/ingredients/Ground_Beef.png",
+          "amount": "250g"
+        },
+        {
+          "name": "Orzo",
+          "image": "/images/ingredients/Orzo.png",
+          "amount": "170g"
+        },
+        {
+          "name": "Sweet Bell Pepper",
+          "image": "/images/ingredients/Sweet_Bell_Pepper.png",
+          "amount": "160g"
+        },
+        {
+          "name": "Baby Spinach",
+          "image": "/images/ingredients/Baby_Spinach.png",
+          "amount": "56g"
+        },
+        {
+          "name": "Baby Tomatoes",
+          "image": "/images/ingredients/Baby_Tomatoes.png",
+          "amount": "113g"
+        },
+        {
+          "name": "Feta Cheese",
+          "image": "/images/ingredients/Feta_Cheese.png",
+          "amount": "1/2 cup"
+        }
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "instruction": "Heat a large pot of salted water to boiling on high. Wash and dry the fresh produce.",
+          "image": "/images/steps/boiling-water.png"
+        },
+        {
+          "number": 2,
+          "instruction": "Cut the sweet pepper into thin strips. Halve the tomatoes. Quarter the lemon.",
+          "image": "/images/steps/cut-vegetables.png"
+        },
+        {
+          "number": 3,
+          "instruction": "Add orzo to the pot of boiling water. Cook 7 to 9 minutes, or until tender. Drain thoroughly.",
+          "image": "/images/steps/cooking-orzo.png"
+        },
+        {
+          "number": 4,
+          "instruction": "While the orzo cooks, in a large pan, cook the beef on medium-high with salt and pepper, breaking it up with a spoon, 4 to 5 minutes.",
+          "image": "/images/steps/cooking-beef.png"
+        },
+        {
+          "number": 5,
+          "instruction": "Add the pepper strips to the pan; season with salt and pepper. Cook, stirring occasionally, 2 to 3 minutes. Add tomatoes and spinach; cook until spinach is wilted.",
+          "image": "/images/steps/cooking-vegetables.png"
+        },
+        {
+          "number": 6,
+          "instruction": "Add the cooked orzo to the pan. Squeeze the juice of 2 lemon wedges over the dish. Stir to combine. Top with feta cheese and serve with remaining lemon wedges.",
+          "image": "/images/steps/final-dish.png"
+        }
+      ]
+    },
+    {
+      "id": "salisbury-steak-style-pork-patties",
+      "title": "Salisbury Steak-Style Pork Patties and Mash",
+      "description": "with Shallot Gravy and Apple Salad",
+      "image": "/images/dishes/Salisbury_Steak_Style_Pork_Patti.png",
+      "cookTime": "40 min",
+      "prepTime": "8 min",
+      "calories": 860,
+      "tags": ["Family Friendly"],
+      "detailedDescription": "",
+      "ingredients": [],
+      "steps": []
+    },
+    {
+      "id": "maple-glazed-chicken-and-sweet-potatoes",
+      "title": "Mango-Glazed Caribbean-Style Chicken",
+      "description": "with Creamy Coleslaw and Green Onion-Lime Rice",
+      "image": "/images/dishes/Mango_Glazed_Caribbean_Style_Chi.png",
+      "cookTime": "30 min",
+      "prepTime": "5 min",
+      "calories": 840,
+      "tags": ["Low CO2"],
+      "detailedDescription": "",
+      "ingredients": [],
+      "steps": []
+    },
+    {
+      "id": "smothered-pork-chops",
+      "title": "Smothered Pork Chops",
+      "description": "with Fusilli and Garlicky Broccoli",
+      "image": "/images/dishes/Smothered_Pork_Chopswith_Fusilli.png",
+      "cookTime": "35 min",
+      "prepTime": "8 min",
+      "calories": 800,
+      "tags": ["New", "Protein Plus"],
+      "detailedDescription": "",
+      "ingredients": [],
+      "steps": []
+    },
+    {
+      "id": "sweet-and-savoury-pork-burgers",
+      "title": "Sweet and Savoury Pork Burgers",
+      "description": "with Herby Fries and Dijonnaise",
+      "image": "/images/dishes/Sweet_and_Savoury_Pork_Burgerswi.png",
+      "cookTime": "30 min",
+      "prepTime": "10 min",
+      "calories": 1230,
+      "tags": ["Discovery"],
+      "detailedDescription": "",
+      "ingredients": [],
+      "steps": []
+    }
+  ]
+}

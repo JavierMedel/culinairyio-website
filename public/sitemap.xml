@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://www.culinairy.io/</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/terms</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/privacy</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/beef-and-roasted-red-pepper-ragu</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/spiced-beef-koftas-with-veggie-hash</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/chicken-caesar-salad-chickpea-croutons</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/lemon-cream-chicken-with-zucchini</loc>
+  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
