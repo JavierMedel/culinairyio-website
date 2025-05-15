@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation'; // Import notFound
 import HeaderWithTransparency from '@/components/HeaderWithTransparency';
+import AddToShoppingListButton from '@/components/AddToShoppingListButton';
 import { Metadata } from 'next';
 import recipesData from '@/lib/recipes.json';
 import { Recipe, Ingredient, Step } from '@/../types/Recipe'; // Import shared types
@@ -26,6 +27,7 @@ async function getRecipeById(id: string): Promise<Recipe | undefined> {
   // This tells TypeScript to trust that the found object conforms to Recipe.
   return recipesData.recipes.find((r) => r.id === id) as Recipe | undefined;
 }
+
 
 export default async function RecipeDetail({
   params
@@ -100,10 +102,12 @@ export default async function RecipeDetail({
 
               <div className="flex flex-wrap gap-2 mb-8">
                 {/* Use recipe.tags */}
-              {recipe.tags?.map((tag: string) => (
+                {recipe.tags?.map((tag: string) => (
                   <span key={tag} className="px-3 py-1 text-sm bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-full">{tag}</span>
                 ))}
               </div>
+
+              <AddToShoppingListButton recipeId={recipe.id} />
             </div>
           </div>
 

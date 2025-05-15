@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ShoppingCartProvider } from "@/components/ShoppingCartContext";
 
 export default function RootLayout({
   children,
@@ -59,9 +60,11 @@ export default function RootLayout({
             `,
           }}
         />
-        <ThemeProvider defaultTheme="dark">
-          {children}
-        </ThemeProvider>
+        <ShoppingCartProvider>
+          <ThemeProvider defaultTheme="dark">
+            {children}
+          </ThemeProvider>
+        </ShoppingCartProvider>
       </body>
     </html>
   );

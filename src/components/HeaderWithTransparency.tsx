@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import CulinAIryioLogo from './CulinAIryioLogo';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { useShoppingCart } from './ShoppingCartContext';
 
 interface HeaderWithTransparencyProps {
   showNav?: boolean;
@@ -70,11 +71,31 @@ const HeaderWithTransparency = ({
           </Link>
         </div>
         <div className="flex items-center space-x-4">
-          {/* Navigation removed for clarity and to match new header style */}
+          {/* Shopping Cart Icon */}
+          <ShoppingCartNavIcon />
           <ThemeToggle />
         </div>
       </div>
     </header>
+  );
+};
+
+// Shopping Cart Icon with Badge Component
+const ShoppingCartNavIcon = () => {
+  const { shoppingCart } = useShoppingCart();
+  const count = shoppingCart.length;
+  return (
+    <Link href="/shopping-list" aria-label="View shopping list" className="relative flex items-center">
+      <span role="img" aria-label="Shopping Cart" className="text-2xl">🛒</span>
+      {count > 0 && (
+        <span
+          aria-label={`${count} recipes in shopping cart`}
+          className="absolute -top-2 -right-2 bg-culinairy-teal text-white text-xs font-bold rounded-full px-2 py-0.5 border border-white dark:border-gray-900"
+        >
+          {count}
+        </span>
+      )}
+    </Link>
   );
 };
 

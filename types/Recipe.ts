@@ -1,7 +1,9 @@
 // Add Ingredient interface based on usage
 export interface Ingredient {
   name: string;
-  quantity: string;
+  quantity: number | string;
+  unit?: string;
+  category?: string;
   allergens?: string[];
   image_url: string;
 }
@@ -47,10 +49,10 @@ export interface Recipe {
   difficulty?: string; // Make optional
   serving_size?: string; // Make optional
   calories_per_serving?: string; // Make optional
-  dietary_info?: { // Make optional and define structure
-    allergens?: string[]; // Make optional
-    may_contain?: string[]; // Make optional
-  };
+  dietary_info?: {
+    allergens?: string[];
+    may_contain?: string[];
+  } | string;
   ingredients: Ingredient[];
   not_included_in_delivery?: NotIncludedItem[]; // Make optional
   cooking_steps: Step[]; // Use Step type
