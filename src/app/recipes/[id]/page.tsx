@@ -43,7 +43,7 @@ export default async function RecipeDetail({
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 text-gray-800 dark:text-gray-200">
-      <HeaderWithTransparency showNav={false} backLink="/recipes" backLinkText="Back to Recipes" />
+      <HeaderWithTransparency showNav={false} backLink="/" backLinkText="Back to Recipes" />
 
       <main className="max-w-7xl mx-auto px-4 py-12 pt-24">
         <div className="mb-12">

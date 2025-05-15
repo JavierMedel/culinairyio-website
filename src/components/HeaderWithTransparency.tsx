@@ -58,17 +58,17 @@ const HeaderWithTransparency = ({
     >
       <div className="container mx-auto px-2 md:px-4 lg:px-8 flex items-center justify-between">
         <div className="flex items-center">
-          <Link href={backLink || "/"} className="flex items-center hover:opacity-90 transition-opacity">
+          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
             <CulinAIryioLogo />
-            {backLink && backLinkText && (
-              <span className="text-culinairy-teal hover:text-culinairy-cyan transition-colors inline-flex items-center ml-4">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                {backLinkText}
-              </span>
-            )}
           </Link>
+          {backLink && backLinkText && (
+            <Link href={backLink} className="text-culinairy-teal hover:text-culinairy-cyan transition-colors inline-flex items-center ml-4">
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              {backLinkText}
+            </Link>
+          )}
         </div>
         <div className="flex items-center space-x-4">
           {/* Shopping Cart Icon */}
@@ -82,8 +82,14 @@ const HeaderWithTransparency = ({
 
 // Shopping Cart Icon with Badge Component
 const ShoppingCartNavIcon = () => {
+  const [count, setCount] = useState(0);
   const { shoppingCart } = useShoppingCart();
-  const count = shoppingCart.length;
+  
+  // Update count after initial render to avoid hydration mismatch
+  useEffect(() => {
+    setCount(shoppingCart.length);
+  }, [shoppingCart.length]);
+  
   return (
     <Link href="/shopping-list" aria-label="View shopping list" className="relative flex items-center">
       <span role="img" aria-label="Shopping Cart" className="text-2xl">🛒</span>

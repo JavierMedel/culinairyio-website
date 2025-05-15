@@ -4,6 +4,7 @@ import { useShoppingCart } from "@/components/ShoppingCartContext";
 import recipesData from "@/lib/recipes.json";
 import type { Recipe, Ingredient } from "../../../types/Recipe";
 import Link from "next/link";
+import HeaderWithTransparency from "@/components/HeaderWithTransparency";
 
 function parseQuantity(q: string | number | undefined) {
   if (typeof q === "number") return q;
@@ -43,6 +44,10 @@ function aggregateIngredients(recipes: any[]) {
 }
 
 export default function ShoppingListClient() {
+  // Header with logo linking to main page
+  // Always show 'Browse recipes' link at the top
+  // (rest of component remains unchanged)
+
   const { shoppingCart, removeFromCart, clearCart } = useShoppingCart();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
@@ -68,7 +73,7 @@ export default function ShoppingListClient() {
       text += `\n${cat}:\n`;
       Object.values(items).forEach((item: any) => {
         text += `- ${item.totalQty} ${item.unit || ""} ${item.name}`;
-        if (item.unitMismatch) text += " (unit mismatch)";
+        if (item.unitMismatch) text += ` <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>`;
         text += "\n";
       });
     });
@@ -79,16 +84,24 @@ export default function ShoppingListClient() {
 
   if (selectedRecipes.length === 0) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-3xl font-bold mb-4">Your Shopping List is Empty</h1>
-        <p className="mb-4">Add recipes to your shopping list to see ingredients here.</p>
-        <Link href="/recipes" className="text-culinairy-teal underline">Browse Recipes</Link>
-      </div>
+      <>
+        <HeaderWithTransparency showNav={false} />
+        <div className="text-center py-12">
+          <h1 className="text-3xl font-bold mb-4">Your Shopping List is Empty</h1>
+          <p className="mb-4">Add recipes to your shopping list to see ingredients here.</p>
+          <Link href="/" className="text-culinairy-teal underline">Browse Recipes</Link>
+        </div>
+      </>
     );
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-12">
+    <>
+      <HeaderWithTransparency showNav={false} />
+      <main className="max-w-2xl mx-auto px-4 py-12">
+        <div className="flex justify-end mb-6">
+          <Link href="/" className="text-culinairy-teal underline font-semibold">Browse Recipes</Link>
+        </div>
       <h1 className="text-3xl font-bold mb-6 text-center">Shopping List</h1>
       <button
         className="mb-4 px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800"
@@ -117,9 +130,11 @@ export default function ShoppingListClient() {
                   className="mr-2"
                 />
                 <span className={checkedItems[cat + key] ? "line-through text-gray-400" : ""}>
-                  {item.totalQty} {item.unit || ""} {item.name}
-                  {item.unitMismatch && <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>}
-                </span>
+  {item.totalQty} {item.unit || ""} {item.name}
+  {item.unitMismatch && (
+    <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>
+  )}
+</span>
               </li>
             ))}
           </ul>
@@ -143,5 +158,6 @@ export default function ShoppingListClient() {
         </ul>
       </div>
     </main>
+  </>
   );
 }
