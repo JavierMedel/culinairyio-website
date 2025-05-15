@@ -56,6 +56,9 @@ export default function Home() {
       
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-culinairy-teal to-culinairy-cyan mb-4">
+             
+            </h1>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-culinairy-teal to-culinairy-cyan mb-4">
             Effortless AI Meal Planning, 
             </h1>

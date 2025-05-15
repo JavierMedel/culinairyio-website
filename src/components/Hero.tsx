@@ -25,35 +25,41 @@ const Hero = () => {
     <section className="w-full py-12 md:py-24 pt-16 flex flex-col items-center justify-center text-center">
       <div className="w-full flex flex-col items-center justify-center">
         <div className="inline-flex items-center rounded-full px-3 py-1 text-sm bg-gray-800/70 text-culinairy-lightGray mb-6">
-        Effortless AI Meal Planning.
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Effortless AI Meal Planning.
+          </motion.span>
         </div>
         <motion.h1 
-          initial={{ opacity: 0.5, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
             delay: 0.5,
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-culinairy-teal to-culinairy-cyan max-w-4xl mb-4"
+          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-culinairy-teal to-culinairy-cyan max-w-4xl mb-6"
         >
-          CulinAIry.io – Effortless AI Meal Planning,<br />Picture It. Cook It. Enjoy It.
+          Effortless Meal Planning — Picture It. Cook It. Enjoy It.
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
-            delay: 0.5,
+            delay: 0.7,
             duration: 0.6,
             ease: "easeOut",
           }}
-          className="dark:text-culinairy-lightGray text-culinairy-darkTeal max-w-xl mx-auto mb-8 text-lg font-medium"
+          className="dark:text-culinairy-lightGray text-culinairy-darkTeal max-w-xl mx-auto mb-10 text-xl leading-relaxed font-medium"
         >
           Ditch the meal-planning stress! Get optimized recipes, step-by-step visual guides, and auto-generated shopping lists—all powered by AI to match your taste and preferences. Turn everyday cooking into a seamless, fun, and inspiring experience.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
             delay: 0.7,
             duration: 0.5,
