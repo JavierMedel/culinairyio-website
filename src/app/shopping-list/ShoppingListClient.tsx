@@ -103,7 +103,7 @@ export default function ShoppingListClient() {
   return (
     <>
       <HeaderWithTransparency showNav={false} />
-      <main className="max-w-2xl mx-auto px-4 py-12"> {/* This <main> tag is now always rendered */}
+      <main className="max-w-2xl mx-auto px-4 pt-24 pb-12"> {/* This <main> tag is now always rendered */}
         {selectedRecipes.length === 0 ? (
           // Empty state content moved inside <main>
           <div className="text-center py-12">
@@ -124,9 +124,9 @@ export default function ShoppingListClient() {
                 <button
                   onClick={() => {
                     if (window.confirm("Are you sure you want to clear your entire shopping list?")) {
-                      clearCart();
-                      setCheckedItems({});
-                      setRemovedIngredients({});
+                      clearCart(); // Clears the recipes from the cart
+                      setCheckedItems({}); // Resets checked items state
+                      setRemovedIngredients({}); // Resets individually removed ingredients state
                     }
                   }}
                   className="px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white text-sm"
