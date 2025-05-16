@@ -4,6 +4,7 @@ import { useShoppingCart } from "@/components/ShoppingCartContext";
 import recipesData from "@/lib/recipes.json";
 import type { Recipe, Ingredient } from "../../../types/Recipe";
 import Link from "next/link";
+import Image from "next/image"; // Add this import for the Image component
 import HeaderWithTransparency from "@/components/HeaderWithTransparency";
 
 function parseQuantity(q: string | number | undefined) {
@@ -95,6 +96,25 @@ export default function ShoppingListClient() {
     navigator.clipboard.writeText(text.trim());
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
+  }
+
+  // New function to handle removing all ingredients from a recipe
+  function handleRemoveRecipeIngredients(recipeId: string) {
+    // Find the recipe
+    const recipe = recipesData.recipes.find((r: any) => r.id === recipeId);
+    
+    if (recipe) {
+      // Create a new object with all ingredients from this recipe marked as removed
+      const newRemovedIngredients = { ...removedIngredients };
+      
+      recipe.ingredients.forEach((ingredient: any) => {
+        const cat = ingredient.category || "Other";
+        const key = `${ingredient.name.toLowerCase()}__${ingredient.unit || ""}`;
+        newRemovedIngredients[cat + key] = true;
+      });
+      
+      setRemovedIngredients(newRemovedIngredients);
+    }
   }
 
   // No early return for empty state here.
@@ -200,6 +220,47 @@ export default function ShoppingListClient() {
                  <p className="text-gray-600 dark:text-gray-400">All ingredients have been removed from the list.</p>
                </div>
             )}
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-3">Recipes</h2>
+              <div className="space-y-3">
+                {selectedRecipes.map((recipe: any) => (
+                  <div key={recipe.id} className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                    <div className="flex items-center">
+                      <div className="w-12 h-12 relative rounded-md overflow-hidden mr-3">
+                        {recipe.image_url && (
+                          <Image
+                            src={recipe.image_url}
+                            alt={recipe.title}
+                            fill
+                            className="object-cover"
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900 dark:text-white">{recipe.title}</h3>
+                        <Link href={`/recipes/${recipe.id}`} className="text-xs text-culinairy-teal hover:underline">
+                          View Recipe
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Remove ${recipe.title} from your shopping list? This will remove all ingredients from this recipe.`)) {
+                            handleRemoveRecipeIngredients(recipe.id);
+                            removeFromCart(recipe.id);
+                          }
+                        }}
+                        className="px-3 py-1 text-xs rounded bg-red-500 hover:bg-red-600 text-white"
+                        aria-label={`Remove ${recipe.title} from shopping list`}
+                      >
+                        Remove Recipe
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </>
         )}
       </main>
