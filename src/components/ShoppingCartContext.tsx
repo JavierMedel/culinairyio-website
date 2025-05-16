@@ -10,6 +10,7 @@ interface ShoppingCartContextType {
   addToCart: (recipeId: string) => void;
   removeFromCart: (recipeId: string) => void;
   clearCart: () => void;
+  isInCart: (recipeId: string) => boolean; // Added isInCart
 }
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(undefined);
@@ -30,7 +31,9 @@ export const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+    }
   }, [shoppingCart]);
 
   const addToCart = (recipeId: string) => {
@@ -46,8 +49,13 @@ export const ShoppingCartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => setShoppingCart([]);
 
+  // Added isInCart implementation
+  const isInCart = (recipeId: string): boolean => {
+    return shoppingCart.some((item) => item.recipeId === recipeId);
+  };
+
   return (
-    <ShoppingCartContext.Provider value={{ shoppingCart, addToCart, removeFromCart, clearCart }}>
+    <ShoppingCartContext.Provider value={{ shoppingCart, addToCart, removeFromCart, clearCart, isInCart }}> {/* Added isInCart to provider value */}
       {children}
     </ShoppingCartContext.Provider>
   );

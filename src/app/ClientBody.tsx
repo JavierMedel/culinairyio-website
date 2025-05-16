@@ -7,9 +7,11 @@ export default function ClientBody({
 }: {
   children: React.ReactNode;
 }) {
-  // Remove any extension-added classes during hydration
   useEffect(() => {
-    // This runs only on the client after hydration
+    // This line overwrites any existing classes on the body tag.
+    // If next-themes is configured to put its class on <html> (default with attribute="class"),
+    // this should not directly interfere with theme switching.
+    // However, it's quite aggressive.
     document.body.className = "antialiased";
   }, []);
 

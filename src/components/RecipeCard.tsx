@@ -1,46 +1,33 @@
 import Image from 'next/image';
 import { Recipe } from '../../types/Recipe';
 import Link from 'next/link';
-// import { useShoppingCart } from './ShoppingCartContext'; // Remove this line
-import { useState, useContext } from 'react';
-import { ShoppingCartContext } from '@/contexts/ShoppingCartContext';
+import { useState } from 'react';
+// import { ShoppingCartContext } from '@/contexts/ShoppingCartContext'; // Remove this incorrect import
+import { useShoppingCart } from '@/components/ShoppingCartContext'; // Use the correct hook
 
 export function RecipeCard({ recipe }: { recipe: Recipe }) {
-  const context = useContext(ShoppingCartContext);
+  const { addToCart, isInCart, shoppingCart } = useShoppingCart(); // Use the hook
 
-  if (!context) {
-    console.error("ShoppingCartContext is not available. Ensure ShoppingCartProvider wraps your application.");
-    return (
-      <div className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md p-4">
-        Error: Shopping cart functionality is unavailable for recipe: {recipe.title || 'N/A'}.
-      </div>
-    );
-  }
+  // The useShoppingCart hook throws an error if context is not available.
+  // The previous `if (!context)` check and fallback UI might not be reached
+  // if the provider is missing globally, as the hook would error out first.
+  // If you need a per-component graceful degradation, you might need a try-catch
+  // around useShoppingCart() or a different error handling strategy.
 
-  // Safely access context properties
-  const { addToCart, isInCart } = context;
   const [showToast, setShowToast] = useState(false);
 
-  // Determine if the item is in cart, safely handling if isInCart is not a function
-  // This provides a stable boolean for rendering and logic
-  const isRecipeInCart = isInCart && typeof isInCart === 'function' && isInCart(recipe.id);
+  // isInCart is now a function from the context
+  const isRecipeInCart = isInCart(recipe.id);
   
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // Ensure both functions exist before using them
-    if (typeof isInCart === 'function' && typeof addToCart === 'function') {
-      // Use the already computed isRecipeInCart or call isInCart(recipe.id) again
-      // For simplicity, we can rely on isRecipeInCart if it's guaranteed to be up-to-date
-      // or call isInCart(recipe.id) if there's any doubt.
-      // Given it's derived right before, isRecipeInCart should be fine here.
-      if (!isRecipeInCart) { 
-        if (addToCart) addToCart(recipe.id);
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
-      }
-    } else {
-      console.error("ShoppingCartContext is missing required functions (addToCart or isInCart).");
+    // addToCart and isInCart are guaranteed by the hook's return type
+    if (!isRecipeInCart) { 
+      addToCart(recipe.id);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
     }
+    // The previous 'else' block with console.error can be removed as types ensure functions exist
   };
 
   return (
@@ -101,7 +88,7 @@ export function RecipeCard({ recipe }: { recipe: Recipe }) {
         </Link>
         <button
           onClick={handleAddToCart}
-          disabled={isRecipeInCart} // Use the safe variable
+          disabled={isRecipeInCart} 
           aria-label="Add recipe to shopping list"
           className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium rounded-lg transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-culinairy-teal ${
             isRecipeInCart ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-culinairy-teal text-white hover:opacity-90'

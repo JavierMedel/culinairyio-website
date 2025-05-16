@@ -2,9 +2,12 @@
 
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/components/ThemeProvider";
+// Ensure this import correctly resolves to the useTheme hook from next-themes,
+// either directly or via your ThemeProvider.tsx re-export.
+import { useTheme } from "@/components/ThemeProvider"; 
+// Or, if ThemeProvider.tsx doesn't re-export useTheme:
+// import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
