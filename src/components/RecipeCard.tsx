@@ -1,20 +1,45 @@
 import Image from 'next/image';
 import { Recipe } from '../../types/Recipe';
 import Link from 'next/link';
-import { useShoppingCart } from './ShoppingCartContext';
-import { useState } from 'react';
+// import { useShoppingCart } from './ShoppingCartContext'; // Remove this line
+import { useState, useContext } from 'react';
+import { ShoppingCartContext } from '@/contexts/ShoppingCartContext';
 
 export function RecipeCard({ recipe }: { recipe: Recipe }) {
-  const { addToCart, shoppingCart } = useShoppingCart();
-  const [showToast, setShowToast] = useState(false);
-  const isInCart = shoppingCart.some(item => item.recipeId === recipe.id);
+  const context = useContext(ShoppingCartContext);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  if (!context) {
+    console.error("ShoppingCartContext is not available. Ensure ShoppingCartProvider wraps your application.");
+    return (
+      <div className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md p-4">
+        Error: Shopping cart functionality is unavailable for recipe: {recipe.title || 'N/A'}.
+      </div>
+    );
+  }
+
+  // Safely access context properties
+  const { addToCart, isInCart } = context;
+  const [showToast, setShowToast] = useState(false);
+
+  // Determine if the item is in cart, safely handling if isInCart is not a function
+  // This provides a stable boolean for rendering and logic
+  const isRecipeInCart = isInCart && typeof isInCart === 'function' && isInCart(recipe.id);
+  
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!isInCart) {
-      addToCart(recipe.id);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
+    // Ensure both functions exist before using them
+    if (typeof isInCart === 'function' && typeof addToCart === 'function') {
+      // Use the already computed isRecipeInCart or call isInCart(recipe.id) again
+      // For simplicity, we can rely on isRecipeInCart if it's guaranteed to be up-to-date
+      // or call isInCart(recipe.id) if there's any doubt.
+      // Given it's derived right before, isRecipeInCart should be fine here.
+      if (!isRecipeInCart) { 
+        if (addToCart) addToCart(recipe.id);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2000);
+      }
+    } else {
+      console.error("ShoppingCartContext is missing required functions (addToCart or isInCart).");
     }
   };
 
@@ -76,11 +101,13 @@ export function RecipeCard({ recipe }: { recipe: Recipe }) {
         </Link>
         <button
           onClick={handleAddToCart}
-          disabled={isInCart}
+          disabled={isRecipeInCart} // Use the safe variable
           aria-label="Add recipe to shopping list"
-          className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium rounded-lg transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-culinairy-teal ${isInCart ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-culinairy-teal text-white hover:opacity-90'}`}
+          className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium rounded-lg transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-culinairy-teal ${
+            isRecipeInCart ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-culinairy-teal text-white hover:opacity-90'
+          }`}
         >
-          {isInCart ? 'Added to Shopping List' : 'Add to Shopping List'}
+          {isRecipeInCart ? 'Added to Shopping List' : 'Add to Shopping List'}
         </button>
         {/* Toast Notification */}
         {showToast && (
