@@ -30,6 +30,7 @@ function aggregateIngredients(recipes: any[]) {
           units: new Set([ingredient.unit]),
           unitMismatch: false,
           checked: false,
+          recipes: [recipe.title], // Add recipe title to track source
         };
       } else {
         if (grouped[cat][key].unit === ingredient.unit) {
@@ -38,6 +39,7 @@ function aggregateIngredients(recipes: any[]) {
           grouped[cat][key].unitMismatch = true;
         }
         grouped[cat][key].units.add(ingredient.unit);
+        grouped[cat][key].recipes.push(recipe.title); // Add recipe title to track source
       }
     });
   });
@@ -100,11 +102,9 @@ export default function ShoppingListClient() {
 
   // New function to handle removing all ingredients from a recipe
   function handleRemoveRecipeIngredients(recipeId: string) {
-    // Find the recipe
     const recipe = recipesData.recipes.find((r: any) => r.id === recipeId);
     
     if (recipe) {
-      // Create a new object with all ingredients from this recipe marked as removed
       const newRemovedIngredients = { ...removedIngredients };
       
       recipe.ingredients.forEach((ingredient: any) => {
@@ -184,31 +184,36 @@ export default function ShoppingListClient() {
                   <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white border-b pb-2 border-gray-200 dark:border-gray-700">{cat}</h2>
                   <ul>
                     {visibleCategoryItems.map(([key, item]: [string, any]) => (
-                      <li key={key} className="flex items-center justify-between mb-2 py-2 border-b border-gray-100 dark:border-gray-700/50 last:border-b-0">
-                        <div className="flex items-center">
-                          <input
-                            type="checkbox"
-                            aria-label={`Mark ${item.name} as purchased`}
-                            checked={!!checkedItems[cat + key]}
-                            onChange={() => handleCheck(cat, key)}
-                            className="mr-3 h-5 w-5 text-culinairy-teal focus:ring-culinairy-cyan border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-800"
-                          />
-                          <span className={`${checkedItems[cat + key] ? "line-through text-gray-500 dark:text-gray-400" : "text-gray-800 dark:text-gray-200"}`}>
-                            {item.totalQty} {item.unit || ""} {item.name}
-                            {item.unitMismatch && (
-                              <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>
-                            )}
-                          </span>
+                      <li key={key} className="flex flex-col mb-2 py-2 border-b border-gray-100 dark:border-gray-700/50 last:border-b-0">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <input
+                              type="checkbox"
+                              aria-label={`Mark ${item.name} as purchased`}
+                              checked={!!checkedItems[cat + key]}
+                              onChange={() => handleCheck(cat, key)}
+                              className="mr-3 h-5 w-5 text-culinairy-teal focus:ring-culinairy-cyan border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-800"
+                            />
+                            <span className={`${checkedItems[cat + key] ? "line-through text-gray-500 dark:text-gray-400" : "text-gray-800 dark:text-gray-200"}`}>
+                              {item.totalQty} {item.unit || ""} {item.name}
+                              {item.unitMismatch && (
+                                <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>
+                              )}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveIngredient(cat, key)}
+                            className="ml-3 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-800/50 group"
+                            aria-label={`Remove ${item.name} from list`}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
                         </div>
-                        <button
-                          onClick={() => handleRemoveIngredient(cat, key)}
-                          className="ml-3 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-800/50 group"
-                          aria-label={`Remove ${item.name} from list`}
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
+                        <div className="ml-8 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                          From: {item.recipes.join(', ')}
+                        </div>
                       </li>
                     ))}
                   </ul>
