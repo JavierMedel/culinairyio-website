@@ -20,25 +20,18 @@ function aggregateIngredients(recipes: Recipe[]) {
   const grouped: Record<string, Record<string, any>> = {};
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient) => {
-      const cat = ingredient.category || "Ingredients";
-      const key = `${ingredient.name.toLowerCase()}__${ingredient.unit || ""}`;
+      const cat = "Ingredients"; // Fixed category instead of using ingredient.category
+      const key = `${ingredient.name.toLowerCase()}`; // Removed unit reference
       if (!grouped[cat]) grouped[cat] = {};
       if (!grouped[cat][key]) {
         grouped[cat][key] = {
           ...ingredient,
           totalQty: parseQuantity(ingredient.quantity),
-          units: new Set([ingredient.unit]),
-          unitMismatch: false,
           checked: false,
           recipes: [recipe.title],
         };
       } else {
-        if (grouped[cat][key].unit === ingredient.unit) {
-          grouped[cat][key].totalQty += parseQuantity(ingredient.quantity);
-        } else {
-          grouped[cat][key].unitMismatch = true;
-        }
-        grouped[cat][key].units.add(ingredient.unit);
+        grouped[cat][key].totalQty += parseQuantity(ingredient.quantity);
         grouped[cat][key].recipes.push(recipe.title);
       }
     });
@@ -59,7 +52,7 @@ export default function ShoppingListClient() {
 
   const selectedRecipes = useMemo(() => {
     return shoppingCart
-      .map((item) => recipesData.recipes.find((r: any) => r.id === item.recipeId))
+      .map((item) => recipesData.recipes.find((r: Recipe) => r.id === item.recipeId))
       .filter(Boolean) as Recipe[];
   }, [shoppingCart]);
 
@@ -89,8 +82,7 @@ export default function ShoppingListClient() {
       if (visibleIngredients.length > 0) {
         text += `\n${cat}:\n`;
         visibleIngredients.forEach((item) => {
-          text += `- ${item.totalQty} ${item.unit || ""} ${item.name}`;
-          if (item.unitMismatch) text += ` (unit mismatch)`;
+          text += `- ${item.totalQty} ${item.name}`;
           text += "\n";
         });
       }
@@ -106,16 +98,16 @@ export default function ShoppingListClient() {
     if (recipeData) {
       const updates = { ...removedIngredients };
       for (const ingredient of recipeData.ingredients) {
-        const cat = ingredient.category || "Ingredients";
-        const key = `${ingredient.name.toLowerCase()}__${ingredient.unit || ""}`;
+        const cat = "Ingredients"; // Fixed category
+        const key = `${ingredient.name.toLowerCase()}`; // Removed unit reference
         updates[cat + key] = true;
       }
       setRemovedIngredients(updates);
       setCheckedItems((prev) => {
         const newChecked = { ...prev };
         for (const ingredient of recipeData.ingredients) {
-          const cat = ingredient.category || "Ingredients";
-          const key = `${ingredient.name.toLowerCase()}__${ingredient.unit || ""}`;
+          const cat = "Ingredients"; // Fixed category
+          const key = `${ingredient.name.toLowerCase()}`; // Removed unit reference
           delete newChecked[cat + key];
         }
         return newChecked;
@@ -203,7 +195,7 @@ export default function ShoppingListClient() {
                                 className="mr-3 h-5 w-5 text-culinairy-teal focus:ring-culinairy-cyan border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-800"
                               />
                               <span className={`${checkedItems[cat + key] ? "line-through text-gray-500 dark:text-gray-400" : "text-gray-800 dark:text-gray-200"}`}>
-                                {item.totalQty} {item.unit || ""} {item.name}
+                                {item.totalQty} {item.name}
                                 {item.unitMismatch && (
                                   <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>
                                 )}
