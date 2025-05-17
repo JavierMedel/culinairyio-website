@@ -16,7 +16,7 @@ export default function Home() {
   // Common recipe categories for quick search
   const quickSearchCategories = [
     "Quick", "Bestseller", "Calorie Smart", "Spicy",
-    "Vegetarian", "Carb Smart", "Family Friendly"
+    "Carb Smart", "Family Friendly"
   ];
 
   const handleQuickSearch = (category: string) => {

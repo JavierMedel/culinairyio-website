@@ -16,8 +16,16 @@ function parseQuantity(q: string | number | undefined) {
   return 1;
 }
 
+// Define a type for the grouped ingredient items
+interface GroupedIngredientItem extends Ingredient {
+  totalQty: number;
+  checked: boolean;
+  recipes: string[];
+  unitMismatch?: boolean;
+}
+
 function aggregateIngredients(recipes: Recipe[]) {
-  const grouped: Record<string, Record<string, any>> = {};
+  const grouped: Record<string, Record<string, GroupedIngredientItem>> = {};
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient) => {
       const cat = "Ingredients"; // Fixed category instead of using ingredient.category
