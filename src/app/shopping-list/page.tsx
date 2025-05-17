@@ -1,5 +1,11 @@
+import Footer from '@/components/Footer';
 import ShoppingListClient from './ShoppingListClient';
 
 export default function ShoppingListPage() {
-  return <ShoppingListClient />;
+  return (
+    <div>
+      <ShoppingListClient />
+      <Footer />
+    </div>
+  );
 }
