@@ -9,43 +9,133 @@
 
 <url>
   <loc>https://www.culinairy.io/</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.culinairy.io/recipes</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <loc>https://www.culinairy.io/shopping-list</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/beef_roasted_pepper_ragu</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/tex-mex_beef_bowl</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/classic_beef_koftas</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/chicken_caesar_salad</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/lemon_chicken_tenders</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/spinach_and_feta_pork_patties</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/charred_shrimp_skewers</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/chicken_tortellini_mushrooms</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/chicken_chive_sauce</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/chicken_tikka_masala</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/cheese_tortellini_mushrooms</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/garlic_salmon_penne</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/creamy_pesto_chicken_orzo</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/pesto_pork_rigatoni</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/rigatoni_with_chicken</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/creamy_rigatoni_with_sausage</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/hearty_bolognese_pasta</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/roasted_dill-garlic_salmon</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/bacon_corn_chowder</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/roasted_pork_tenderloin</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/stovetop_pastitsio_fusilli</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.culinairy.io/recipes/taco-style_beef_bowls</loc>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.culinairy.io/terms</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.culinairy.io/privacy</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
+  <lastmod>2025-05-17T17:08:38+00:00</lastmod>
   <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.culinairy.io/recipes/beef-and-roasted-red-pepper-ragu</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.culinairy.io/recipes/spiced-beef-koftas-with-veggie-hash</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.culinairy.io/recipes/chicken-caesar-salad-chickpea-croutons</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://www.culinairy.io/recipes/lemon-cream-chicken-with-zucchini</loc>
-  <lastmod>2025-04-07T02:37:46+00:00</lastmod>
-  <priority>0.64</priority>
 </url>
 
 
