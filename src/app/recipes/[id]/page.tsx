@@ -141,24 +141,26 @@ export default async function RecipeDetail({
           <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Cooking Steps</h2>
           <div className="space-y-8">
             {recipe.cooking_steps.map((step: Step) => (
-              <div key={step.step} className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-culinairy-teal text-white font-bold text-xl">
-                  {step.step} 
-                  {/* Use step.step */}
+              <div key={step.step} className="flex flex-col md:flex-row gap-6">
+                <div className="flex md:w-1/2">
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-culinairy-teal text-white font-bold text-xl mr-4">
+                    {step.step}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-gray-700 dark:text-gray-300">{step.description}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-gray-700 dark:text-gray-300">{step.description}</p> 
-                  {/* Use step.description */}
-                  {step.image_url && ( // Use step.image_url
+                {step.image_url && (
+                  <div className="md:w-1/2 mt-4 md:mt-0">
                     <Image
                       src={step.image_url || '/images/steps/default-step.png'}
                       alt={`Step ${step.step}`}
                       width={750}
                       height={500}
-                      className="mt-4 rounded-lg"
+                      className="rounded-lg w-full h-auto"
                     />
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
