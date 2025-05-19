@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Recipe } from '../../types/Recipe'; // Adjust the path if needed
 
-export default function ClientSideSearch({ recipes }) {
+export default function ClientSideSearch({ recipes }: { recipes: Recipe[] }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategories, setActiveCategories] = useState([]);
+  // Make sure to explicitly type the state variable as string[]
+  const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
   // Common recipe categories for quick search
   const quickSearchCategories = [
@@ -15,7 +17,7 @@ export default function ClientSideSearch({ recipes }) {
     "Carb Smart", "Family Friendly"
   ];
 
-  const handleQuickSearch = (category) => {
+  const handleQuickSearch = (category: string) => {
     // Toggle the category in the active categories array
     if (activeCategories.includes(category)) {
       setActiveCategories(activeCategories.filter(cat => cat !== category));
@@ -37,7 +39,7 @@ export default function ClientSideSearch({ recipes }) {
     const matchesAllCategories = 
       activeCategories.length === 0 || 
       (recipe.tags && activeCategories.every(category => 
-        recipe.tags.some(tag => 
+        recipe.tags?.some(tag => 
           tag.toLowerCase().includes(category.toLowerCase())
         )
       ));

@@ -1,0 +1,169 @@
+[33mcommit c8161802b31a94cd5bedb1b5471448f35d611693[m
+Author: Javier Medel, MSc <msc.javier.medel@gmail.com>
+Date:   Sun May 18 20:03:29 2025 -0400
+
+    refactor(recipes): improve layout and move search to separate component
+    
+    Restructured the recipe detail page for better responsiveness and moved the client-side search functionality to a dedicated `ClientSideSearch` component to improve code maintainability and separation of concerns.
+
+[1mdiff --git a/components/RecipeDetail.tsx b/components/RecipeDetail.tsx[m
+[1mdeleted file mode 100644[m
+[1mindex e85f820..0000000[m
+[1m--- a/components/RecipeDetail.tsx[m
+[1m+++ /dev/null[m
+[36m@@ -1,140 +0,0 @@[m
+[31m-import Image from 'next/image';[m
+[31m-import type { ImageProps } from 'next/image';[m
+[31m-// Correct the import path assuming components/ is at the root or src/components/[m
+[31m-import { Recipe, Ingredient, Step, NutritionValues } from '../types/Recipe'; [m
+[31m-[m
+[31m-export function RecipeDetail({ recipe }: { recipe: Recipe }) {[m
+[31m-  // Check if recipe and nested properties exist before accessing them[m
+[31m-  if (!recipe) {[m
+[31m-    return <div>Recipe data is missing.</div>;[m
+[31m-  }[m
+[31m-[m
+[31m-  return ([m
+[31m-    <div className="recipe-detail">[m
+[31m-      <div className="recipe-header">[m
+[31m-        <Image[m
+[31m-          src={recipe.image_url}[m
+[31m-          alt={recipe.title}[m
+[31m-          width={1200}[m
+[31m-          height={800}[m
+[31m-          className="recipe-main-image"[m
+[31m-        />[m
+[31m-        <div className="recipe-header-info">[m
+[31m-          <div className="tags">[m
+[31m-            {/* Add optional chaining and type for tags */}[m
+[31m-            {recipe.tags?.map((tag: string) => ([m
+[31m-              <span key={tag} className="tag">{tag}</span>[m
+[31m-            ))}[m
+[31m-          </div>[m
+[31m-          <h1>{recipe.title || 'Recipe Title Missing'}</h1>[m
+[31m-          {recipe.subtitle && <h2>{recipe.subtitle}</h2>}[m
+[31m-          {recipe.cousine && <p className="cuisine">{recipe.cousine} Cuisine</p>}[m
+[31m-          <p className="description">{recipe.description || 'Description missing.'}</p>[m
+[31m-        </div>[m
+[31m-      </div>[m
+[31m-[m
+[31m-      {/* Meta section - check if properties exist */}[m
+[31m-      <div className="recipe-meta">[m
+[31m-        <div className="time-info">[m
+[31m-          {recipe.prep_time && <span>Prep: {recipe.prep_time}</span>}[m
+[31m-          {recipe.cooking_time && <span>Cook: {recipe.cooking_time}</span>}[m
+[31m-          {recipe.total_time && <span>Total: {recipe.total_time}</span>}[m
+[31m-        </div>[m
+[31m-        <div className="serving-info">[m
+[31m-          {recipe.servings && <span>Servings: {recipe.servings}</span>}[m
+[31m-          {recipe.difficulty && <span>Difficulty: {recipe.difficulty}</span>}[m
+[31m-        </div>[m
+[31m-      </div>[m
+[31m-[m
+[31m-      <div className="recipe-content">[m
+[31m-        {/* Ingredients section - check if ingredients array exists */}[m
+[31m-        <section className="ingredients-section">[m
+[31m-          <h3>Ingredients</h3>[m
+[31m-          <div className="ingredients-grid">[m
+[31m-            {/* Add type for ingredient */}[m
+[31m-            {recipe.ingredients?.map((ingredient: Ingredient) => ([m
+[31m-              <div key={ingredient.name} className="ingredient-card">[m
+[31m-                {ingredient.image_url && <Image[m
+[31m-                  src={ingredient.image_url}[m
+[31m-                  alt={ingredient.name}[m
+[31m-                  width={100}[m
+[31m-                  height={100}[m
+[31m-                />}[m
+[31m-                <h4>{ingredient.name || 'Ingredient Name Missing'}</h4>[m
+[31m-                <p>{ingredient.quantity || 'Quantity Missing'}</p>[m
+[31m-                {ingredient.allergens && ingredient.allergens.length > 0 && ([m
+[31m-                  <div className="allergens">[m
+[31m-                    <small>Contains: {ingredient.allergens.join(', ')}</small>[m
+[31m-                  </div>[m
+[31m-                )}[m
+[31m-              </div>[m
+[31m-            ))}[m
+[31m-          </div>[m
+[31m-        </section>[m
+[31m-[m
+[31m-        {/* Not Included section - check if array exists */}[m
+[31m-        {recipe.not_included_in_delivery && recipe.not_included_in_delivery.length > 0 && ([m
+[31m-          <section className="not-included-section">[m
+[31m-            <h3>You'll Need</h3>[m
+[31m-            <div className="not-included-grid">[m
+[31m-              {/* Corrected map function and Image component */}[m
+[31m-              {recipe.not_included_in_delivery.map((item: Ingredient) => ([m
+[31m-                <div key={item.name} className="not-included-item">[m
+[31m-                  {item.image_url && ([m
+[31m-                    <Image[m
+[31m-                      src={item.image_url}[m
+[31m-                      alt={item.name || 'Item image'} // Add alt text[m
+[31m-                      width={50}[m
+[31m-                      height={50}[m
+[31m-                    />[m
+[31m-                  )}[m
+[31m-                  <span>{item.name || 'Item Name Missing'}</span>[m
+[31m-                  <span>{item.quantity || ''}</span>[m
+[31m-                </div>[m
+[31m-              ))}[m
+[31m-            </div>[m
+[31m-          </section>[m
+[31m-        )}[m
+[31m-[m
+[31m-        {/* Cooking Steps section - check if array exists */}[m
+[31m-        <section className="cooking-steps">[m
+[31m-          <h3>Instructions</h3>[m
+[31m-          {/* Add type annotation for step parameter */}[m
+[31m-          {recipe.cooking_steps?.map((step: Step) => ([m
+[31m-            <div key={step.step} className="step-card">[m
+[31m-              <div className="step-number">Step {step.step}</div>[m
+[31m-              {step.image_url && <Image[m
+[31m-                src={step.image_url}[m
+[31m-                alt={`Step ${step.step}`}[m
+[31m-                width={750}[m
+[31m-[m
+[31m-                height={500}[m
+[31m-              />}[m
+[31m-              <p>{step.description || 'Instruction missing.'}</p>[m
+[31m-            </div>[m
+[31m-          ))}[m
+[31m-        </section>[m
+[31m-[m
+[31m-        {/* Nutrition section - check if object and nested object exist */}[m
+[31m-        {/* Add optional chaining */}[m
+[31m-        {recipe.nutrition_values?.per_serving && ([m
+[31m-          <section className="nutrition-section">[m
+[31m-            <h3>Nutrition Values (per serving)</h3>[m
+[31m-            <div className="nutrition-grid">[m
+[31m-              {/* Explicitly return null when value is falsy */}[m
+[31m-              {Object.entries(recipe.nutrition_values.per_serving).map(([key, value]) => ([m
+[31m-                value ? ([m
+[31m-                  <div key={key} className="nutrition-item">[m
+[31m-                    <span className="nutrition-label">{key.replace(/_/g, ' ')}</span>[m
+[31m-                    <span className="nutrition-value">{value}</span>[m
+[31m-                  </div>[m
+[31m-                ) : null[m
+[31m-              ))}[m
+[31m-            </div>[m
+[31m-          </section>[m
+[31m-        )}[m
+[31m-      </div>[m
+[31m-    </div>[m
+[31m-  );[m
+[31m-}[m
+[31m-// Removed duplicated closing tags below this line[m
+[1mdiff --git a/src/app/page.tsx b/src/app/page.tsx[m
+[1mindex a467587..fe5e54b 100644[m
+[1m--- a/src/app/page.tsx[m
+[1m+++ b/src/app/page.tsx[m
+[36m@@ -7,6 +7,7 @@[m [mimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }[m
+ import Link from 'next/link';[m
+ import Image from 'next/image';[m
+ import recipesData from '@/lib/recipes.json';[m
+[32m+[m[32mimport ClientSideSearch from '@/components/ClientSideSearch'; // We'll create this component[m
+ [m
+ export default function Home() {[m
+   const [searchTerm, setSearchTerm] = useState('');[m
+[36m@@ -70,105 +71,8 @@[m [mexport default function Home() {[m
+           </p>[m
+         </div
