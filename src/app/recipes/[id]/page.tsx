@@ -1,5 +1,6 @@
 import React, { use } from 'react';
 import Link from 'next/link';
+import Footer from '@/components/Footer'; 
 import Image from 'next/image';
 import { notFound } from 'next/navigation'; // Import notFound
 import HeaderWithTransparency from '@/components/HeaderWithTransparency';
@@ -167,18 +168,7 @@ export default async function RecipeDetail({
         </section>
       </main>
 
-      <footer className="w-full py-6 px-4 border-t border-gray-200 dark:border-gray-800 mt-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-500 dark:text-gray-500 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} CulinAIry.io All rights reserved.
-          </div>
-          <div className="flex items-center space-x-6 text-sm">
-            <Link href="/terms" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Terms</Link>
-            <Link href="/privacy" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Privacy</Link>
-            <a href="mailto:hello@culinairy.ai" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Contact</a>
-          </div>
-        </div>
-      </footer>
+      <Footer /> {/* Replace the inline footer with this */}
     </div>
   );
 };

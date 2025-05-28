@@ -1,5 +1,6 @@
 import React from 'react';
 import HeaderWithTransparency from '@/components/HeaderWithTransparency';
+import Footer from '@/components/Footer'; // Add this import
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -135,27 +136,7 @@ const TermsOfService = () => {
         </div>
       </main>
 
-      <footer className="w-full py-6 px-4 border-t border-gray-800 mt-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-500 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} CulinAIry.io. All rights reserved.
-          </div>
-          <div className="flex items-center space-x-6 text-sm">
-            <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
-              Terms
-            </Link>
-            <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
-              Privacy
-            </Link>
-            <a
-              href="mailto:hello@culinairy.ai"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              Contact
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer /> {/* Replace the inline footer with this */}
     </div>
   );
 };
