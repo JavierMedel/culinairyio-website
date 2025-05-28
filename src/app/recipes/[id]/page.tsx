@@ -48,8 +48,8 @@ export default async function RecipeDetail({
       <main className="max-w-7xl mx-auto px-4 py-12 pt-24">
         <div className="mb-12">
 
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
+          <div className="grid md:grid-cols-3 gap-8 items-start">
+            <div className="relative aspect-[3/2] rounded-lg overflow-hidden shadow-md md:col-span-2">
               <Image
                 src={recipe.image_url}
                 alt={recipe.title}
@@ -58,7 +58,7 @@ export default async function RecipeDetail({
               />
             </div>
 
-            <div>
+            <div className="md:col-span-1">
               <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">{recipe.title}</h1>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">{recipe.subtitle || recipe.description}</p> 
               {/* Use subtitle if available, otherwise description */}
