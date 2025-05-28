@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from 'next/link';
 import Image from 'next/image';
 import recipesData from '@/lib/recipes.json';
+import { RecipeCard } from '@/components/RecipeCard';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -127,45 +128,7 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredRecipes.map((recipe) => (
-              <Link href={`/recipes/${recipe.id}`} key={recipe.id}>
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300 overflow-hidden border-culinairy-teal/20 hover:border-culinairy-teal bg-gradient-to-br from-white to-culinairy-cyan/5 dark:from-gray-900 dark:to-culinairy-teal/10">
-                  <div className="relative h-48 w-full">
-                    <Image
-                      src={recipe.image_url}
-                      alt={recipe.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="text-culinairy-teal">{recipe.title}</CardTitle>
-                    <CardDescription>
-                      {recipe.subtitle || recipe.description.substring(0, 100) + '...'}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {recipe.tags && recipe.tags.slice(0, 3).map((tag) => (
-                        <span 
-                          key={tag} 
-                          className="px-2 py-1 text-xs bg-culinairy-teal/10 text-culinairy-teal dark:bg-culinairy-teal/20 dark:text-culinairy-cyan rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                      <svg className="w-4 h-4 mr-1 text-culinairy-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {recipe.total_time || recipe.cooking_time || 'N/A'}
-                    </div>
-                    <div className="text-sm text-culinairy-cyan font-medium">View Recipe →</div>
-                  </CardFooter>
-                </Card>
-              </Link>
+              <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>
         )}
