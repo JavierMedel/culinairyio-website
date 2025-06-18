@@ -57,6 +57,7 @@ export default function ShoppingListClient() {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [removedIngredients, setRemovedIngredients] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<string | null>(null);
 
   const selectedRecipes = useMemo(() => {
     return shoppingCart
@@ -123,17 +124,25 @@ export default function ShoppingListClient() {
     }
   }
 
+  function handleRecipeClick(recipeTitle: string) {
+    setSelectedRecipe(selectedRecipe === recipeTitle ? null : recipeTitle);
+  }
+
+  function isIngredientFromSelectedRecipe(ingredientRecipes: string[]) {
+    return selectedRecipe ? ingredientRecipes.includes(selectedRecipe) : false;
+  }
+
   if (!mounted) return null;
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-r from-culinairy-darkTeal to-culinairy-darkBlue">
       <HeaderWithTransparency showNav={false} />
-      <main className="max-w-2xl mx-auto px-4 pt-24 pb-12">
+      <main className="max-w-6xl mx-auto px-4 pt-24 pb-12 text-white">
         <div>
           {selectedRecipes.length === 0 ? (
             <div className="text-center py-24">
               <h1 className="text-3xl font-bold mb-8">Your Shopping List is Empty</h1>
-              <p className="text-gray-600 dark:text-gray-400 mb-8">
+              <p className="text-gray-200 mb-8">
                 Your shopping list is empty. Add recipes to your cart from the recipe collection to see ingredients here.
               </p>
               <div className="mt-6">
@@ -144,7 +153,7 @@ export default function ShoppingListClient() {
                   View Recipe Collection
                 </Link>
               </div>
-              <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-4 text-sm text-gray-300">
                 You can add recipes by visiting recipes and clicking the "Add to Cart" button
               </p>
             </div>
@@ -158,6 +167,7 @@ export default function ShoppingListClient() {
                       clearCart();
                       setCheckedItems({});
                       setRemovedIngredients({});
+                      setSelectedRecipe(null);
                     }
                   }}
                   className="px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white text-sm"
@@ -168,7 +178,7 @@ export default function ShoppingListClient() {
               </div>
 
               <div className="flex items-center space-x-2 mb-6">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-200">
                   Recipes in list: {selectedRecipes.length}
                 </p>
                 <button
@@ -180,98 +190,149 @@ export default function ShoppingListClient() {
                 </button>
               </div>
 
-              {Object.entries(groupedIngredients).map(([cat, items]) => {
-                const visibleCategoryItems = Object.entries(items).filter(
-                  ([key]) => !removedIngredients[cat + key]
-                );
+              {selectedRecipe && (
+                <div className="mb-4 p-2 bg-culinairy-teal/20 rounded-md">
+                  <p className="text-sm flex items-center">
+                    <span className="mr-2">✓</span>
+                    Showing ingredients for: <span className="font-semibold ml-1">{selectedRecipe}</span>
+                    <button 
+                      onClick={() => setSelectedRecipe(null)} 
+                      className="ml-2 text-xs underline"
+                    >
+                      Clear selection
+                    </button>
+                  </p>
+                </div>
+              )}
 
-                if (visibleCategoryItems.length === 0) return null;
+              {/* Two-column layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left column - Ingredients */}
+                <div>
+                  <div className="mb-6">
+                    <h2 className="text-xl font-semibold mb-3 text-white border-b pb-2 border-gray-700">Ingredients</h2>
+                    <div className="space-y-3">
+                      {Object.entries(groupedIngredients).map(([cat, items]) => {
+                        const visibleCategoryItems = Object.entries(items).filter(
+                          ([key]) => !removedIngredients[cat + key]
+                        );
 
-                return (
-                  <div key={cat} className="mb-8 p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
-                    <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white border-b pb-2 border-gray-200 dark:border-gray-700">{cat}</h2>
-                    <ul>
-                      {visibleCategoryItems.map(([key, item]) => (
-                        <li key={key} className="flex flex-col mb-2 py-2 border-b border-gray-100 dark:border-gray-700/50 last:border-b-0">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                              <input
-                                type="checkbox"
-                                aria-label={`Mark ${item.name} as purchased`}
-                                checked={!!checkedItems[cat + key]}
-                                onChange={() => handleCheck(cat, key)}
-                                className="mr-3 h-5 w-5 text-culinairy-teal focus:ring-culinairy-cyan border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-800"
-                              />
-                              <span className={`${checkedItems[cat + key] ? "line-through text-gray-500 dark:text-gray-400" : "text-gray-800 dark:text-gray-200"}`}>
-                                {item.totalQty} {item.name}
-                                {item.unitMismatch && (
-                                  <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>
-                                )}
-                              </span>
+                        if (visibleCategoryItems.length === 0) return null;
+
+                        return (
+                          <div key={cat}>
+                            {visibleCategoryItems.map(([key, item]) => {
+                              const isFromSelectedRecipe = isIngredientFromSelectedRecipe(item.recipes);
+                              return (
+                                <li 
+                                  key={key} 
+                                  className={`flex flex-col mb-2 py-2 border-b border-gray-700/50 last:border-b-0 list-none transition-colors duration-200 ${isFromSelectedRecipe ? 'bg-culinairy-teal/20 rounded-md px-2' : ''}`}
+                                >
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                      <input
+                                        type="checkbox"
+                                        aria-label={`Mark ${item.name} as purchased`}
+                                        checked={!!checkedItems[cat + key]}
+                                        onChange={() => handleCheck(cat, key)}
+                                        className="mr-3 h-5 w-5 text-culinairy-teal focus:ring-culinairy-cyan border-gray-300 rounded bg-gray-700 border-gray-600 focus:ring-offset-gray-800"
+                                      />
+                                      <span className={`${checkedItems[cat + key] ? "line-through text-gray-400" : isFromSelectedRecipe ? "text-white font-medium" : "text-gray-200"}`}>
+                                        {item.totalQty} {item.name}
+                                        {item.unitMismatch && (
+                                          <span className="text-xs text-red-500 ml-2">(unit mismatch)</span>
+                                        )}
+                                      </span>
+                                    </div>
+                                    <button
+                                      onClick={() => handleRemoveIngredient(cat, key)}
+                                      className="ml-3 p-1 rounded-full hover:bg-red-800/50 group"
+                                      aria-label={`Remove ${item.name} from list`}
+                                    >
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                  <div className="ml-8 mt-1 text-xs text-gray-400">
+                                    From: {item.recipes.join(", ")}
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right column - Recipes */}
+                <div>
+                  <div className="mb-6">
+                    <h2 className="text-xl font-semibold mb-3 text-white border-b pb-2 border-gray-700">Recipes</h2>
+                    <div className="space-y-3">
+                      {selectedRecipes.map((recipe) => (
+                        <div 
+                          key={recipe.id} 
+                          className={`flex items-center justify-between p-3 rounded-lg shadow-sm cursor-pointer transition-colors duration-200 ${selectedRecipe === recipe.title ? 'bg-culinairy-teal/30' : 'bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/50'}`}
+                          onClick={() => handleRecipeClick(recipe.title)}
+                        >
+                          <div className="flex items-center">
+                            <div className="w-12 h-12 relative rounded-md overflow-hidden mr-3">
+                              {recipe.image_url && (
+                                <Image
+                                  src={recipe.image_url}
+                                  alt={recipe.title}
+                                  fill
+                                  className="object-cover"
+                                />
+                              )}
                             </div>
+                            <div>
+                              <h3 className="font-medium text-white">{recipe.title}</h3>
+                              <Link 
+                                href={`/recipes/${recipe.id}`} 
+                                className="text-xs text-culinairy-teal hover:underline"
+                                onClick={(e) => e.stopPropagation()} // Prevent recipe selection when clicking the link
+                              >
+                                View Recipe
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="flex items-center">
+                            {selectedRecipe === recipe.title && (
+                              <span className="mr-2 text-xs bg-culinairy-teal/70 px-2 py-1 rounded text-white">
+                                Selected
+                              </span>
+                            )}
                             <button
-                              onClick={() => handleRemoveIngredient(cat, key)}
-                              className="ml-3 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-800/50 group"
-                              aria-label={`Remove ${item.name} from list`}
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent recipe selection when clicking remove
+                                if (window.confirm(`Remove ${recipe.title} from your shopping list? This will remove all ingredients from this recipe.`)) {
+                                  handleRemoveRecipeIngredients(recipe.id);
+                                  removeFromCart(recipe.id);
+                                  if (selectedRecipe === recipe.title) {
+                                    setSelectedRecipe(null);
+                                  }
+                                }
+                              }}
+                              className="px-3 py-1 text-xs rounded bg-red-500 hover:bg-red-600 text-white"
+                              aria-label={`Remove ${recipe.title} from shopping list`}
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                              </svg>
+                              Remove Recipe
                             </button>
                           </div>
-                          <div className="ml-8 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                            From: {item.recipes.join(", ")}
-                          </div>
-                        </li>
+                        </div>
                       ))}
-                    </ul>
-                  </div>
-                );
-              })}
-
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-3">Recipes</h2>
-                <div className="space-y-3">
-                  {selectedRecipes.map((recipe) => (
-                    <div key={recipe.id} className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-                      <div className="flex items-center">
-                        <div className="w-12 h-12 relative rounded-md overflow-hidden mr-3">
-                          {recipe.image_url && (
-                            <Image
-                              src={recipe.image_url}
-                              alt={recipe.title}
-                              fill
-                              className="object-cover"
-                            />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-gray-900 dark:text-white">{recipe.title}</h3>
-                          <Link href={`/recipes/${recipe.id}`} className="text-xs text-culinairy-teal hover:underline">
-                            View Recipe
-                          </Link>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => {
-                          if (window.confirm(`Remove ${recipe.title} from your shopping list? This will remove all ingredients from this recipe.`)) {
-                            handleRemoveRecipeIngredients(recipe.id);
-                            removeFromCart(recipe.id);
-                          }
-                        }}
-                        className="px-3 py-1 text-xs rounded bg-red-500 hover:bg-red-600 text-white"
-                        aria-label={`Remove ${recipe.title} from shopping list`}
-                      >
-                        Remove Recipe
-                      </button>
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
             </>
           )}
         </div>
       </main>
-    </>
+    </div>
   );
 }
